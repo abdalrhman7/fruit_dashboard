@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'core/helper_function/on_generate_routes.dart';
+import 'feature/dashboard/views/dashboard_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
      onGenerateRoute: onGenerateRoute,
+      initialRoute: DashboardView.routeName,
     );
   }
 }

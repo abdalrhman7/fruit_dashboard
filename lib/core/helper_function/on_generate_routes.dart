@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fruit_dashboard/feature/add_broduct/presntation/views/add_product_view.dart';
+import 'package:fruit_dashboard/feature/add_product/presntation/views/add_product_view.dart';
 import 'package:fruit_dashboard/feature/dashboard/views/dashboard_view.dart';
 
 

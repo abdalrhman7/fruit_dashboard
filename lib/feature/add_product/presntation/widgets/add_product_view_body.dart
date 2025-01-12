@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fruit_dashboard/core/widgets/custom_button.dart';
 import 'package:fruit_dashboard/core/widgets/custom_text_form_field.dart';
-import 'package:fruit_dashboard/feature/add_product/domain/entity/add_product_input_entity.dart';
+import 'package:fruit_dashboard/feature/add_product/domain/entity/product_entity.dart';
 import 'package:fruit_dashboard/feature/add_product/domain/entity/review_entity.dart';
 import 'package:fruit_dashboard/feature/add_product/presntation/manger/add_product_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -119,7 +119,7 @@ class _AddProductViewBodyState extends State<AddProductViewBody> {
                   if (image != null) {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      AddProductInputEntity input = AddProductInputEntity(
+                      ProductEntity input = ProductEntity(
                         name: name,
                         code: code,
                         description: description,

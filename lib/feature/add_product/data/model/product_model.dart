@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:fruit_dashboard/feature/add_product/data/model/review_model.dart';
-import 'package:fruit_dashboard/feature/add_product/domain/entity/add_product_input_entity.dart';
+import 'package:fruit_dashboard/feature/add_product/domain/entity/product_entity.dart';
 import 'package:fruit_dashboard/feature/add_product/domain/entity/review_entity.dart';
 
-class AddProductInputModel {
+class ProductModel {
   final String name;
   final String code;
   final String description;
@@ -16,9 +16,10 @@ class AddProductInputModel {
   final bool isOrganic;
   final int numberOfCalories;
   final int unitAmount;
+  final int sellingCount;
   final List<ReviewModel> reviews;
 
-  AddProductInputModel({
+  ProductModel({
     required this.name,
     required this.code,
     required this.description,
@@ -31,11 +32,12 @@ class AddProductInputModel {
     required this.numberOfCalories,
     required this.unitAmount,
     required this.reviews,
+     this.sellingCount = 0,
   });
 
-  factory AddProductInputModel.fromEntity(
-      AddProductInputEntity addProductInputEntity) {
-    return AddProductInputModel(
+  factory ProductModel.fromEntity(
+      ProductEntity addProductInputEntity) {
+    return ProductModel(
       reviews: addProductInputEntity.reviews.map((e) => ReviewModel.fromEntity(e)).toList(),
       name: addProductInputEntity.name,
       code: addProductInputEntity.code,
@@ -64,6 +66,7 @@ class AddProductInputModel {
       'numberOfCalories': numberOfCalories,
       'unitAmount': unitAmount,
       'reviews': reviews.map((e) => e.toJson()).toList(),
+      'sellingCount': sellingCount
     };
   }
 }

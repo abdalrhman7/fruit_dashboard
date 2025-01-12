@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'data_service.dart';
 
-class FireStoreService implements DatabaseService {
+class FireStoreService extends DatabaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override

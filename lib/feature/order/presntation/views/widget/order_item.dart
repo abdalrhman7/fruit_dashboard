@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fruit_dashboard/feature/order/domain/entities/data/models/order_entity.dart';
 
+import 'order_action_button.dart';
 
 class OrderItemWidget extends StatelessWidget {
   final OrderEntity orderModel;
@@ -17,12 +19,28 @@ class OrderItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Total Price
-            Text(
-              'Total Price: \$${orderModel.totalPrice.toStringAsFixed(2)}',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+            Row(
+              children: [
+                Text(
+                  'Total Price: \$${orderModel.totalPrice.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: _getStatusColor(orderModel.status.name),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    orderModel.status.name,
+                    style: const TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
 
@@ -32,18 +50,17 @@ class OrderItemWidget extends StatelessWidget {
               style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
             const SizedBox(height: 8),
-
             // Shipping Address
             const Text(
               'Shipping Address:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Text(
-              orderModel.shippingAddressEntity.toString(),
+              orderModel.shippingAddressEntity.address.toString(),
               style: const TextStyle(fontSize: 14),
             ),
             const SizedBox(height: 8),
-
+            OrderActionButton(orderEntity: orderModel),
             // Payment Method
             Text(
               'Payment Method: ${orderModel.paymentMethod}',
@@ -63,11 +80,15 @@ class OrderItemWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 final product = orderModel.orderProducts[index];
                 return ListTile(
-                  leading: Image.network(
-                    product.imageUrl,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
+                  leading: CachedNetworkImage(
+                    imageUrl: product.imageUrl,
+                    // imageUrl: 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-169994-674010.jpg&fm=jpg',
+                    placeholder: (context, url) => SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: const CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                   title: Text(product.name),
                   subtitle: Text(
@@ -85,5 +106,20 @@ class OrderItemWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'pending':
+        return Colors.orange;
+      case 'accepted':
+        return Colors.blue;
+      case 'delivered':
+        return Colors.green;
+      case 'cancelled':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
   }
 }

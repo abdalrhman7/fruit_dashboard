@@ -1,3 +1,4 @@
+import 'package:fruit_dashboard/core/enums/order_enum.dart';
 import 'package:fruit_dashboard/feature/order/domain/entities/data/models/order_entity.dart';
 import 'package:fruit_dashboard/feature/order/domain/entities/data/models/order_product_entity.dart';
 import 'package:fruit_dashboard/feature/order/domain/entities/data/models/shipping_address_entity.dart';
@@ -11,6 +12,7 @@ OrderEntity getDummyOrder() {
     floor: '5th Floor',
     city: 'New York',
     email: 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-169994-674010.jpg&fm=jpg',
+
   );
 
   // Create a sample list of order products
@@ -51,5 +53,7 @@ OrderEntity getDummyOrder() {
     shippingAddressEntity: shippingAddress,
     orderProducts: orderProducts,
     paymentMethod: 'Cash',
+    status:OrderStatus.pending,
+    orderId: '123',
   );
 }

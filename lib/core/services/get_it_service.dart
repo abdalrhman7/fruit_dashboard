@@ -28,6 +28,6 @@ void setupGetIt() {
   );
 
   getIt.registerSingleton<OrdersRepo>(
-    OrdersRepoImpl(databaseService: FireStoreService()),
+    OrdersRepoImpl(databaseService: getIt.get<DatabaseService>()),
   );
 }

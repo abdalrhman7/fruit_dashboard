@@ -1,5 +1,5 @@
-
 import 'package:dartz/dartz.dart';
+import 'package:fruit_dashboard/core/enums/order_enum.dart';
 import 'package:fruit_dashboard/core/errors/failures.dart';
 import 'package:fruit_dashboard/core/services/data_service.dart';
 import 'package:fruit_dashboard/core/utils/backend_endpoint.dart';
@@ -15,16 +15,34 @@ class OrdersRepoImpl implements OrdersRepo {
       : _databaseService = databaseService;
 
   @override
-  Future<Either<Failures, List<OrderEntity>>> fetchOrders() async {
+  Stream<Either<Failures, List<OrderEntity>>> fetchOrders() async* {
     try {
-      final data =
-          await _databaseService.getData(path: BackendEndpoint.getOrders);
-      List<OrderEntity> orders = (data as List<dynamic>)
-          .map((e) => OrderModel.fromJson(e).toEntity())
-          .toList() as List<OrderEntity> ;
-      return Right(orders);
+      await for (var data
+          in _databaseService.streamData(path: BackendEndpoint.getOrders)) {
+        List<OrderEntity> orders = (data as List<dynamic>)
+            .map<OrderEntity>(
+              (e) => OrderModel.fromJson(e).toEntity(),
+            )
+            .toList();
+        yield Right(orders);
+      }
     } catch (e) {
-      return Left(ServerFailure('Failed to fetch orders'));
+      yield Left(ServerFailure('Failed to fetch orders'));
+    }
+  }
+
+  @override
+  Future<Either<Failures, void>> updateOrder(
+      {required OrderStatus status, required String orderId}) async {
+    try {
+      await _databaseService.updateData(
+        path: BackendEndpoint.updateOrder,
+        data: {'status': status.name},
+        documentId: orderId,
+      );
+      return right(null);
+    } catch (e) {
+      return Left(ServerFailure('Failed to update order'));
     }
   }
 }

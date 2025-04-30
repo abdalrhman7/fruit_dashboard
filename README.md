@@ -1,16 +1,27 @@
-# fruit_dashboard
+🍓 Fruit Hub Dashboard
 
-A new Flutter project.
+Fruit Hub Dashboard is a Flutter-based admin panel for managing the Fruit Hub e-commerce platform. It allows administrators to manage products and track customer orders in real-time using Firebase.
 
-## Getting Started
+✨ Features
+Add New Products: Admins can add new products with names, prices, and images.
 
-This project is a starting point for a Flutter application.
+View Orders: See a list of all incoming orders in real-time.
 
-A few resources to get you started if this is your first Flutter project:
+Update Order Status:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Mark orders as Accepted or Delivered
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Orders start as Pending and are updated by tapping a button
+
+Real-time Order Listener: Order changes are synced immediately using Firebase Realtime capabilities
+
+🛠️ Technologies Used
+
+Firebase Realtime Database – Storing and listening to order updates
+
+Supabase Storage – Uploading and retrieving product images
+
+Firebase Core – App initialization and connection to backend services
+
+Firebase Database Listener – Auto-refresh order status changes in real-time
+
